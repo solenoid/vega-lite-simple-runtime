@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<script src="d3.min.js"></script>
+<script src="vega.min.js"></script>
+<script src="vega-lite.min.js"></script>
+
+<div id="vis"></div>
+
+<script>
+
+var vlSpec = {
+  "description": "Line chart of Horsepower over time",
+  "data": {"url": "data/cars.json"},
+  "mark": "line",
+  "encoding": {
+    "x": {"field": "Year", "type": "temporal", "timeUnit": "year"},
+    "y": {"field": "Horsepower", "type": "quantitative", "aggregate": "mean"}
+  }
+};
+var vgSpec = vl.compile(vlSpec).spec;
+
+vg.parse.spec(vgSpec, function(chart) {
+  var view = chart({el: '#vis', renderer: 'svg'});
+  view.update();
+});
+</script>
